@@ -2,7 +2,7 @@
 
 /*
  * This implements 'Get' method of DBUS_INTERFACE_PROPERTIES so a
- * client can inspect the properties/attributes of 'TestInterface'.
+ * client can inspect the properties/attributes of 'CloudPushServerInterface'.
  */
 DBusHandlerResult Cloud_Push_DbusStub::server_get_properties_handler(const char *property, DBusConnection *conn, DBusMessage *reply)
 {
@@ -57,7 +57,7 @@ DBusHandlerResult Cloud_Push_DbusStub::server_get_all_properties_handler(DBusCon
 }
 
 /*
- * This function implements the 'TestInterface' interface for the
+ * This function implements the 'CloudPushServerInterface' interface for the
  * 'Server' DBus object.
  *
  * It also implements 'Introspect' method of
@@ -66,7 +66,7 @@ DBusHandlerResult Cloud_Push_DbusStub::server_get_all_properties_handler(DBusCon
  * implemented by 'Server' object. This also can be used by tools such
  * as d-feet(1) and can be queried by:
  *
- * $ gdbus introspect --session --dest org.example.TestServer --object-path /org/example/TestObject
+ * $ gdbus introspect --session --dest org.cloudPush.Server --object-path /org/cloudPush/ServerObject
  */
 DBusHandlerResult Cloud_Push_DbusStub::server_message_handler(DBusConnection *conn, DBusMessage *message, void *data)
 {
@@ -226,7 +226,7 @@ int Cloud_Push_DbusStub::Cloud_Push_DbusStubInit(void)
 	}
 
 	if (!dbus_connection_register_object_path(conn, "/org/cloudPush/ServerObject", &server_vtable, NULL)) {
-		fprintf(stderr, "Failed to register a object path for 'TestObject'\n");
+		fprintf(stderr, "Failed to register a object path for 'ServerObject'\n");
 		goto fail;
 	}
 
