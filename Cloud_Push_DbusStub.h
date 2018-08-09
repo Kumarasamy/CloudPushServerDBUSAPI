@@ -43,8 +43,8 @@ const char *server_introspection_xml =
 
 	"  <interface name='org.cloudPush.ServerInterface'>\n"
 	"    <property name='Version' type='s' access='read' />\n"
-	"    <method name='Ping' >\n"
-	"      <arg type='s' direction='out' />\n"
+	"    <method name='Message' >\n"
+	"      <arg type='(ss)' direction='in' />\n"
 	"    </method>\n"
 	"    <method name='Echo'>\n"
 	"      <arg name='string' direction='in' type='s'/>\n"

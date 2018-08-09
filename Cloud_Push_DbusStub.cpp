@@ -120,16 +120,34 @@ DBusHandlerResult Cloud_Push_DbusStub::server_message_handler(DBusConnection *co
 		dbus_message_unref(reply);
 		return result;
 
-	}  else if (dbus_message_is_method_call(message, "org.cloudPush.ServerInterface", "Ping")) {
+	}  else if (dbus_message_is_method_call(message, "org.cloudPush.ServerInterface", "Message")) {
 		const char *pong = "Pong";
 
 		if (!(reply = dbus_message_new_method_return(message)))
 			goto fail;
+		DBusMessageIter msgIter;
+		dbus_message_iter_init(message, &msgIter);
+		if (DBUS_TYPE_STRUCT == dbus_message_iter_get_arg_type(&msgIter)) {
+
+			DBusMessageIter structIter;
+			dbus_message_iter_recurse(&msgIter, &structIter);
+			if (DBUS_TYPE_STRING == dbus_message_iter_get_arg_type(&structIter)) {
+				char* str = NULL;
+				dbus_message_iter_get_basic(&structIter, &str);
+				printf("%s\n",str);
+				dbus_message_iter_next(&structIter);		  
+			}
+			if (DBUS_TYPE_STRING== dbus_message_iter_get_arg_type(&structIter)){
+				char* str = NULL; 
+				dbus_message_iter_get_basic(&structIter, &str);
+				printf("%s\n",str);
+			}
+
+		}
 
 		dbus_message_append_args(reply,
 					 DBUS_TYPE_STRING, &pong,
 					 DBUS_TYPE_INVALID);
-
 	} else if (dbus_message_is_method_call(message, "org.cloudPush.ServerInterface", "Echo")) {
 		const char *msg;
 
@@ -200,7 +218,8 @@ fail:
 
 
 const DBusObjectPathVTable server_vtable = {
-	.message_function = &Cloud_Push_DbusStub::server_message_handler
+	NULL,
+	&Cloud_Push_DbusStub::server_message_handler
 };
 
 

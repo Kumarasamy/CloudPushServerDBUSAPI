@@ -8,7 +8,7 @@ CFLAGS = -g -Wall -Werror -std=c++11
 all: dbus-server 
 
 dbus-server: Cloud_Push_DbusStub.cpp
-		clang++ $< -o $@ $(CFLAGS) $(CFLAGS_DBUS) $(CFLAGS_DBUS_GLIB)
+		g++ $< -o $@ $(CFLAGS) $(CFLAGS_DBUS) $(CFLAGS_DBUS_GLIB)
 
 dbus-client: dbus-client.c
 		gcc $< -o $@ $(CFLAGS) $(CFLAGS_GIO)
